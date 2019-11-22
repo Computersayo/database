@@ -1,52 +1,45 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>formtest</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>slider</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
 </head>
 <body class="container">
+
 	<?php
-	$conn=mysqli_connect("localhost","root","","nyatike");
-	if(isset($_POST['submit'])){
-		$first=$_POST['firstname'];
-		$second=$_POST['lastname'];
-		$email=$_POST['email'];
-		$contact=$_POST['contact'];
-		$add=$_POST['ADDRESS'];
-		if($first !=''|| $email !=''){
-			$sql=("insert into log(firstname,lastname,email,contact,ADDRESS) VALUES('$first','$second','$email','$contact','$add')");
-			if (mysqli_query($conn,$sql)) {
-				
-			echo "<br/><br/><span>Data inserted successfully...!!</span>";
+	$conn=mysqli_connect("localhost","root","","ogata");
+
+	if(isset($_POST['save'])){
+
+		
+		$sql="INSERT INTO users(firstname,password,email) VALUES('".$_POST["firstname"]."','".$_POST["password"]."','".$_POST["email"]."')";
+		if(!mysqli_query($conn,$sql)){
+			die("data failure");
+			
 		}
 		else{
-			echo "<p>insertion failed <br/> some fields are missing<p/>";
+			echo "data inserted";
 		}
+		
+	
 	}
-}
-
+	mysqli_close($conn);
 	?>
-	<div class="maindiv">
-		<div class="formdiv">
-			<div class="title">
-				<h2>REGISTRATION FORM</h2>	
-			</div>
-			<form action="index.php" method="post">
-				<h2>Form</h2>
-				<label>FName:</label>
-				<input  class="name"type="text" name="firstname">
-				<label>LName:</label>
-				<input  class="name"type="text" name="lastname">
-				<label>EMAIL:</label>
-				<input  class="name"type="text" name="email">
-				<label>contact:</label>
-				<input  class="name"type="text" name="contact">
-				<label>ADDRESS:</label>
-				<textarea cols="25" name="ADDRESS" rows="5"></textarea><br>
-				<input class="submit" name="submit" type="submit" value="insert">	
-				
-			</form>
-		</div>
-	</div>
+	<form action="index.php" method="post">
+		<label id="first">FIRSTNAME:</label><br>
+		<input type="text" name="firstname"><br>
+		<label id="first">PASSWORD:</label><br>
+		<input type="password" name="password"><br>
+		<label id="first">EMAIL:</label><br>
+		<input type="text" name="email"><br>
+		<button type="submit" name="save">save</button>
+	</form>
+	
+
 </body>
 </html>
